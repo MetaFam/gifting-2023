@@ -49,7 +49,7 @@ h1 {
 }
 
 @keyframes hue-spin {
-  0% { filter: hue-roatate(0) }
+  0% { filter: hue-rotate(0deg) }
   50% { filter: hue-rotate(360deg) }
 }
 
@@ -60,6 +60,7 @@ h1 > span {
   animation: hue-spin 3s infinite ease-in-out;
 
   background-image: url('Purple Leopard.svg');
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   -webkit-text-stroke: 2px white;
@@ -133,7 +134,7 @@ h1.outline > span {
 }
 
 #steps > li > h2, #submit {
-  font-size: calc(0.25 * var(--header-size));
+  font-size: calc(0.35 * var(--header-size));
   font-weight: bold;
   margin: 0 0 1rem 0;
   padding: 0.5rem 1rem;
@@ -150,13 +151,14 @@ h1.outline > span {
   height: 10vmin;
 }
 
-.file {
+.file, .file * {
   display: flex;
   justify-content: center;
+  align-self: center;
 }
 
 .file, .file select, .file option, .file optgroup {
-  font-size: calc(0.1 * var(--header-size));
+  font-size: calc(0.2 * var(--header-size));
 }
 
 @media only screen and (max-width: 768px) {
@@ -246,9 +248,9 @@ textarea {
 
 h2:hover .tooltip .tip {
   position: absolute;
-  left: calc(50vw - 40rem / 2);
-  top: 2em;
-  width: calc(40rem - 2em);
+  left: calc(50vw - 35rem / 2);
+  top: 3em;
+  width: calc(35rem - 2em);
   display: inline-block;
   background-color: #333;
   border: 2px solid white;
