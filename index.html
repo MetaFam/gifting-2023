@@ -28,133 +28,134 @@
       </h1>
     </header>
     <main>
-      <ol id="steps">
-        <li>
-          <h2>
-            Sign-In With Ethereum
-            <span class="tooltip">
-              <input type="checkbox" id="siwe-tip"/>
-              <span class="handle">
-                <label for="siwe-tip">🛈</label>
+      <form>
+        <ol id="steps">
+          <li>
+            <h2>
+              Sign-In With Ethereum
+              <span class="tooltip">
+                <input type="checkbox" id="siwe-tip"/>
+                <span class="handle">
+                  <label for="siwe-tip">🛈</label>
+                </span>
+                <span class="tip">
+                  <p>
+                    <strong>Sign-In With Ethereum</strong> will authenticate you to the site using your Ethereum wallet. In order to participate, the account you connect as must be a player or a patron of <a href="//metagame.wtf" target="_blank">MetaGame</a>.
+                  </p>
+                </span>
               </span>
-              <span class="tip">
-                <p>
-                  <strong>Sign-In With Ethereum</strong> will authenticate you to the site using your Ethereum wallet. In order to participate, the account you connect as must be a member of the MetaGame DAO.
-                </p>
-              </span>
-            </span>
-          </h2>
+            </h2>
 
-          <button>
-            <img id="SIWE" src="siwe.svg" alt="Sign-In With Ethereum"/>
-          </button>
-        </li>
-        <li>
-          <h2>
-            Select A Card Front
-            <span class="tooltip">
-              <input type="checkbox" id="front-tip"/>
-              <span class="handle">
-                <label for="front-tip">🛈</label>
+            <button>
+              <img id="SIWE" src="siwe.svg" alt="Sign-In With Ethereum"/>
+            </button>
+          </li>
+          <li>
+            <h2>
+              Select A Card Front
+              <span class="tooltip">
+                <input type="checkbox" id="front-tip"/>
+                <span class="handle">
+                  <label for="front-tip">🛈</label>
+                </span>
+                <span class="tip">
+                  <p>
+                    The card front should be an image with a aspect ratio of 85.6:54 <i>(the dimensions of a CR-80 card)</i>.
+                  </p>
+                  <p>
+                    Images are ideally in SVG format so they can be easily edited for use by other players.
+                  </p>
+                </span>
               </span>
-              <span class="tip">
-                <p>
-                  The card front should be an image with a aspect ratio of 85.6:54 <i>(the dimensions of a CR-80 card)</i>.
-                </p>
-                <p>
-                  Images are ideally in SVG format so they can be easily edited for use by other players.
-                </p>
-              </span>
-            </span>
-          </h2>
+            </h2>
 
-          <fieldset class="file">
-            <label>
-              <h3>Existing:</h3>
-              <select
-                id="front"
-                onchange=""
-              >
-                <option>No Selection</option>
-                <optgroup label="By @dysbulic">
-                  <option>Front #1</option>
-                  <option>Front #2</option>
-                </optgroup>
-                <optgroup label="By @peth">
-                  <option>Front #3</option>
-                </optgroup>
-              </select>
-            </label>
-            <span>or</span>
-            <label>
-              <h3 class="button">Upload</h3>
-              <input type="file" id="front" accept="image/*"/>
-            </label>
-          </fieldset>
-        </li>
-        <li>
-          <h2>
-            Select A Card Back
-            <span class="tooltip">
-              <input type="checkbox" id="back-tip"/>
-              <span class="handle">
-                <label for="back-tip">🛈</label>
+            <fieldset class="file">
+              <label>
+                <h3>Existing:</h3>
+                <select
+                  id="front"
+                  onchange=""
+                >
+                  <option>No Selection</option>
+                  <optgroup label="By @dysbulic">
+                    <option>Front #1</option>
+                    <option>Front #2</option>
+                  </optgroup>
+                  <optgroup label="By @peth">
+                    <option>Front #3</option>
+                  </optgroup>
+                </select>
+              </label>
+              <span>or</span>
+              <label>
+                <h3 class="button">Upload</h3>
+                <input type="file" id="front" accept="image/*"/>
+              </label>
+            </fieldset>
+          </li>
+          <li>
+            <h2>
+              Select A Card Back
+              <span class="tooltip">
+                <input type="checkbox" id="back-tip"/>
+                <span class="handle">
+                  <label for="back-tip">🛈</label>
+                </span>
+                <span class="tip">
+                  <p>
+                    The card front should be an image with a aspect ratio of 85.6:54 <i>(the dimensions of a CR-80 card)</i>.
+                  </p>
+                  <p>
+                    Images are ideally in SVG format so they can be easily edited for use by other players.
+                  </p>
+                </span>
               </span>
-              <span class="tip">
-                <p>
-                  The card front should be an image with a aspect ratio of 85.6:54 <i>(the dimensions of a CR-80 card)</i>.
-                </p>
-                <p>
-                  Images are ideally in SVG format so they can be easily edited for use by other players.
-                </p>
-              </span>
-            </span>
-          </h2>
+            </h2>
 
-          <fieldset class="file">
-            <label>
-              <h3>Existing:</h3>
-              <select
-                id="back"
-                onchange=""
-              >
-                <option>No Selection</option>
-                <option>Back #1</option>
-                <option>Back #2</option>
-                <option>Back #3</option>
-              </select>
-            </label>
-            <span>or</span>
-            <label>
-              <h3 class="button">Upload</h3>
-              <input type="file" id="front" accept="image/*"/>
-            </label>
-          </fieldset>
-        </li>
-        <li>
-          <h2>
-            Specify a Mailing Address
-            <span class="tooltip">
-              <input type="checkbox" id="mail-tip"/>
-              <span class="handle">
-                <label for="mail-tip">🛈</label>
+            <fieldset class="file">
+              <label>
+                <h3>Existing:</h3>
+                <select
+                  id="back"
+                  onchange=""
+                >
+                  <option>No Selection</option>
+                  <option>Back #1</option>
+                  <option>Back #2</option>
+                  <option>Back #3</option>
+                </select>
+              </label>
+              <span>or</span>
+              <label>
+                <h3 class="button">Upload</h3>
+                <input type="file" id="front" accept="image/*"/>
+              </label>
+            </fieldset>
+          </li>
+          <li>
+            <h2>
+              Specify a Mailing Address
+              <span class="tooltip">
+                <input type="checkbox" id="mail-tip"/>
+                <span class="handle">
+                  <label for="mail-tip">🛈</label>
+                </span>
+                <span class="tip">
+                  <p>
+                    Players have two options for specifying an address:
+                  </p>
+                  <ul>
+                    <li>Mail can be sent to a Post Office with a recipient name, but no specific delivery address. In this situation the player will need to give their legal name so as to be able to show identification to claim the package.</li>
+                    <li>Mail can be addressed as normal with a number and street. In this situation a player may use a pseudonym.</li>
+                  </ul>
+                </span>
               </span>
-              <span class="tip">
-                <p>
-                  Players have two options for specifying an address:
-                </p>
-                <ul>
-                  <li>Mail can be sent to a Post Office with a recipient name, but no specific delivery address. In this situation the player will need to give their legal name so as to be able to show identification.</li>
-                  <li>Mail can be addressed as normal with a number and street. In this situation a player may use a pseudonym.</li>
-                </ul>
-              </span>
-            </span>
-          </h2>
+            </h2>
 
-          <textarea id="address"></textarea>
-        </li>
-        <li><button id="submit" type="submit">Submit</button></li>
-      </ol>
-
+            <textarea id="address"></textarea>
+          </li>
+          <li><button id="submit" type="submit">Submit</button></li>
+        </ol>
+      </form>
     </body>
 </html>

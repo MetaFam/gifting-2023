@@ -26,7 +26,7 @@ html::before {
   left: 0;
   bottom: 0;
   right: 0;
-  -webkit-mask-image: linear-gradient(#00000077, #00000000);
+  -webkit-mask-image: linear-gradient(#00000099, #00000000);
 }
 
 
@@ -40,7 +40,6 @@ html::before {
 body {
   margin: 0;
   backdrop-filter: blur(0.1rem);
-  padding-bottom: 14em;
 }
 
 h1 {
@@ -140,8 +139,10 @@ h1.outline > span {
   padding: 0.5rem 1rem;
   color: white;
   background-image: url('Purple Leopard.svg');
+  background-size: 50%;
   border-radius: 1.5rem;
   border: 2px solid black;
+  -webkit-text-stroke: 1px #99999999;
 }
 
 #SIWE {
@@ -211,6 +212,10 @@ textarea {
   padding: 0.5em;
 }
 
+.tooltip {
+  font-weight: normal;
+}
+
 .tooltip input:checked ~ .handle {
   color: darkgreen;
 }
@@ -221,18 +226,29 @@ textarea {
 
 .tooltip .tip {
   display: none;
-  font-weight: normal;
   font-size: calc(0.15 * var(--header-size));
   padding: 0.25em;
   text-align: justify;
   padding-inline: 0.5em;
 }
 
-.tooltip:hover .tip, .tooltip input:checked ~ .tip {
+.tooltip .tip p:first-of-type {
+  margin-top: 0;
+}
+
+.tooltip .tip p:last-of-type {
+  margin-bottom: 0;
+}
+
+.tooltip .tip a {
+  color: #d753d7;
+}
+
+h2:hover .tooltip .tip {
   position: absolute;
-  left: calc(50vw - 15rem);
+  left: calc(50vw - 40rem / 2);
   top: 2em;
-  width: calc(30rem - 2em);
+  width: calc(40rem - 2em);
   display: inline-block;
   background-color: #333;
   border: 2px solid white;
@@ -241,12 +257,28 @@ textarea {
 }
 
 @media only screen and (max-width: 768px) {
-  .tooltip:hover .tip, .tooltip input:checked ~ .tip {
+  h2:hover .tooltip .tip {
     left: calc(50vw - calc((100vw - 4em) / 2));
     width: calc(100vw - 4em);
   }
 }
 
 #submit {
-  filter: hue-rotate(90deg);
+  filter: hue-rotate(90deg) drop-shadow(0 0 0.1em black);
+  transition: filter 0.5s ease-in-out;
+}
+
+#submit:hover {
+  filter: hue-rotate(270deg) drop-shadow(0 0 0.1em white);
+  padding:
+    calc(0.5rem + 1px)
+    calc(1rem - 0.75px) 
+    calc(0.5rem - 1px)
+    calc(1rem + 0.75px)
+  ;
+}
+
+#submit:active {
+  filter: hue-rotate(270deg) drop-shadow(0 0 0.1em darkgreen);
+  transition: filter 0.1s ease-in-out;
 }
