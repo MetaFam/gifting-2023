@@ -1,0 +1,252 @@
+@font-face {
+  font-family: 'Best Friends Font';
+  src: url('Best Friends Font.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Boho Font - Lined';
+  src: url('Boho Font - Lined.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Boogie Down';
+  src: url('Boogie Down.ttf') format('truetype');
+}
+
+:root {
+  --header-size: min(18vw, 18vh);
+}
+
+html::before {
+  content: '';
+  background-image: url('Oranges & Ornaments.svg');
+  background-size: 25%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  -webkit-mask-image: linear-gradient(#00000077, #00000000);
+}
+
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color: white;
+    background-color: #333;
+  }
+}
+
+body {
+  margin: 0;
+  backdrop-filter: blur(0.1rem);
+  padding-bottom: 14em;
+}
+
+h1 {
+  margin: 0;
+  width: 100%;
+  position: relative;
+}
+
+@keyframes hue-spin {
+  0% { filter: hue-roatate(0) }
+  50% { filter: hue-rotate(360deg) }
+}
+
+h1 > span {
+  display: block;
+  text-align: center;
+  transition: filter 1.5s ease-in-out;
+  animation: hue-spin 3s infinite ease-in-out;
+
+  background-image: url('Purple Leopard.svg');
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 2px white;
+
+  position: relative;
+}
+
+h1 > span:hover {
+  filter: hue-rotate(180deg);
+}
+
+h1 .org {
+  font-size: calc(1.2 * var(--header-size));
+  font-family: 'Best Friends Font', sans-serif;
+  margin-top: calc(-0.4 * var(--header-size));
+}
+
+h1 .year {
+  font-size: calc(1.7 * var(--header-size));
+  font-family: 'Boho Font - Lined', sans-serif;
+  filter: hue-rotate(90deg);
+  margin-top: calc(-0.95 * var(--header-size));
+}
+
+h1 .event {
+  font-size: calc(1.9 * var(--header-size));
+  font-family: 'Boogie Down', sans-serif;
+  filter: luminance(0.25);
+  margin-top: calc(-2.2 * var(--header-size));
+}
+
+h1 .cap-letter {
+  font-size: 150%;
+}
+
+h1.outline {
+  position: absolute;
+  top: 0;
+  cursor-events: none;
+}
+
+h1.outline > span:first-of-type {
+  margin-top: 0;
+}
+
+h1.outline > span {
+  background: transparent;
+}
+
+#steps {
+  margin: 0;
+  padding: 0;
+}
+
+#steps > li > h2::before {
+  content: "#" counter(step) ": ";
+  font-weight: bold;
+}
+
+#steps > li {
+  counter-increment: step;
+  list-style: none;
+  margin: 0 0 2em 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+#steps > li > h2, #submit {
+  font-size: calc(0.25 * var(--header-size));
+  font-weight: bold;
+  margin: 0 0 1rem 0;
+  padding: 0.5rem 1rem;
+  color: white;
+  background-image: url('Purple Leopard.svg');
+  border-radius: 1.5rem;
+  border: 2px solid black;
+}
+
+#SIWE {
+  width: 30vmin;
+  height: 10vmin;
+}
+
+.file {
+  display: flex;
+  justify-content: center;
+}
+
+.file, .file select, .file option, .file optgroup {
+  font-size: calc(0.1 * var(--header-size));
+}
+
+@media only screen and (max-width: 768px) {
+  .file {
+    flex-direction: column;
+  }
+  .file label{
+    align-self: center;
+  }
+}
+
+.file label {
+  display: flex;
+}
+
+.file h3 {
+  margin: 0;
+  margin-right: 0.5ex;
+}
+
+.file > span {
+  margin-inline: 0.5ex;
+  align-self: center;
+}
+
+.file input {
+  display: none;
+}
+
+button, .button {
+  color: buttontext;
+  background-color: buttonface;
+  font-weight: normal;
+  padding: 0.1rem 0.5rem;
+  border: 1px outset;
+  border-radius: 0.25em;
+}
+
+button:hover, .button:hover {
+  filter: brightness(0.75);
+  padding:
+    calc(0.1rem + 1px)
+    calc(0.5rem - 0.75px) 
+    calc(0.1rem - 1px)
+    calc(0.5rem + 0.75px)
+  ;
+  border: 1px inset;
+}
+
+textarea {
+  width: clamp(10em, 25em, 75vw);
+  height: 8em;
+  padding: 0.5em;
+}
+
+.tooltip input:checked ~ .handle {
+  color: darkgreen;
+}
+
+.tooltip input {
+  display: none;
+}
+
+.tooltip .tip {
+  display: none;
+  font-weight: normal;
+  font-size: calc(0.15 * var(--header-size));
+  padding: 0.25em;
+  text-align: justify;
+  padding-inline: 0.5em;
+}
+
+.tooltip:hover .tip, .tooltip input:checked ~ .tip {
+  position: absolute;
+  left: calc(50vw - 15rem);
+  top: 2em;
+  width: calc(30rem - 2em);
+  display: inline-block;
+  background-color: #333;
+  border: 2px solid white;
+  border-radius: 1em;
+  z-index: 2;
+}
+
+@media only screen and (max-width: 768px) {
+  .tooltip:hover .tip, .tooltip input:checked ~ .tip {
+    left: calc(50vw - calc((100vw - 4em) / 2));
+    width: calc(100vw - 4em);
+  }
+}
+
+#submit {
+  filter: hue-rotate(90deg);
+}
