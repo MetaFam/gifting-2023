@@ -4,9 +4,7 @@ export type Maybe<T> = T | null
 
 export type Path = Array<string>
 
-export type APIError = {
-  message: string
-}
+export type APIError = { message: string }
 
 // Cast to a type without needing “as unknown”
 export type Force<T> = T

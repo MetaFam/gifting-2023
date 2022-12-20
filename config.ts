@@ -2,15 +2,15 @@ export const sessionOpts = (() => {
   const {
     NODE_ENV,
     SESSION_PASSWORD,
-    NEXT_PUBLIC_SESSION_COOKIE_NAME
+    NEXT_PUBLIC_SESSION_COOKIE_NAME,
   } = process.env
 
   return {
     cookieName: NEXT_PUBLIC_SESSION_COOKIE_NAME ?? 'mimis-default',
     password: SESSION_PASSWORD ?? 'This is a password.',
     cookieOptions: {
-      secure: NODE_ENV === 'production'
-    }
+      secure: NODE_ENV === 'production',
+    },
   }
 })()
 
