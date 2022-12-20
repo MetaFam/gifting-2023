@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   ApolloClient,
   InMemoryCache,
@@ -6,14 +6,19 @@ import {
   gql
 } from '@apollo/client'
 import Image from 'next/image'
-import { httpURL } from '../helpers'
+import { graphQLURL, hasuraAdminKey } from '@/config'
+import { httpURL } from '@/helpers'
+import { Maybe } from '@/types'
+
+const headers: Record<string, string> = {}
+if(hasuraAdminKey) {
+  headers['x-hasura-admin-secret'] = hasuraAdminKey
+}
 
 const client = new ApolloClient({
-  uri: 'https://metagifting.hasura.app/v1/graphql',
+  uri: graphQLURL,
   cache: new InMemoryCache(),
-  headers: {
-    'x-hasura-admin-secret': process.env.NEXT_PUBLIC_HASURA_ADMIN_KEY ?? ''
-  }
+  headers,
 })
 
 const facesQuery = gql`
@@ -42,9 +47,15 @@ type User = {
   faces: Array<Face>
 }
 
+type Selected = {
+  id?: string
+  title?: Maybe<string>
+  url?: string
+}
+
 export const CardFaceChooser: React.FC = () => {
   const [users, setUsers] = useState([])
-  const [url, setURL] = useState(null)
+  const [selected, setSelected] = useState<Selected>({})
 
   useEffect(() => {
     const q = async () => {
@@ -54,14 +65,17 @@ export const CardFaceChooser: React.FC = () => {
     q()
   }, [])
 
-  const changed = ({
-    target: {
-      selectedOptions: [{ dataset }]
-    }
-  }) => {
-    if (!dataset.url) throw new Error('Missing URL.')
-    console.info({ url: dataset.url })
-    setURL(dataset.url)
+  const changed = (
+    { target: { selectedOptions: opts } }:
+    { target: { selectedOptions: NodeList } }
+  ) => {
+    console.info({ opts })
+    const [{ dataset }] = Array.from(opts)
+
+    const { id, title = null, url } = dataset
+    if (!url) throw new Error('Missing URL.')
+    console.info({ id, title, url, dataset })
+    setSelected({ id, title, url })
   }
 
   return (
@@ -97,7 +111,13 @@ export const CardFaceChooser: React.FC = () => {
           <input type="file" id="front" accept="image/*" />
         </label>
       </fieldset>
-      {url != null && <Image src={httpURL(url)} width="856" height="540" />}
+      {selected.url != null && (
+        <Image
+          src={httpURL(selected.url) ?? ''}
+          alt={selected.title ?? '𝙐𝙣𝙩𝙞𝙩𝙡𝙚𝙙'}
+          width="856" height="540"
+        />
+      )}
     </>
   )
 }

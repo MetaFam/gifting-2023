@@ -6,8 +6,10 @@ export const sessionOpts = (() => {
   } = process.env
 
   return {
-    cookieName: NEXT_PUBLIC_SESSION_COOKIE_NAME ?? 'mimis-default',
-    password: SESSION_PASSWORD ?? 'This is a password.',
+    cookieName: NEXT_PUBLIC_SESSION_COOKIE_NAME ?? 'mg-gifts-default',
+    password: SESSION_PASSWORD ?? (
+      'This is a password which must be more than 32 characters.'
+    ),
     cookieOptions: {
       secure: NODE_ENV === 'production',
     },
@@ -26,3 +28,12 @@ export const limitingDelayKey = 'Mïmis-Gateway-Limiting-Delay'
 
 export const ipfsAPIURL =
   process.env.NEXT_PUBLIC_IPFS_API_URL ?? 'http://localhost:5001/api/v0'
+
+export const graphQLURL = (
+  process.env.NEXT_PUBLIC_GRAPHQL_URL
+  ?? (() => { throw new Error('Missing NEXT_PUBLIC_GRAPHQL_URL') })()
+)
+
+export const hasuraAdminKey = (
+  process.env.NEXT_PUBLIC_HASURA_ADMIN_KEY ?? null
+)

@@ -18,22 +18,14 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "baseUrl": ".",
     "paths": {
-      "@/types": [
-        "types"
-      ],
-      "@/config": [
-        "config"
-      ],
-      "@/hooks": [
-        "hooks"
-      ],
-      "@/lib/*": [
-        "lib/*"
-      ],
-      "@/components": [
-        "components/index"
-      ],
+      "@/types": ["lib/types"],
+      "@/config": ["lib/config"],
+      "@/hooks": ["lib/hooks"],
+      "@/helpers": ["lib/helpers"],
+      "@/lib/*": ["lib/*"],
+      "@/components": ["components/index"],
     }
   },
   "include": [

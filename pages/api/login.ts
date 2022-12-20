@@ -28,9 +28,9 @@ const handler = async (
 
     const message = new SIWEMessage(input)
 
-    if (!process.env.MAINNET_PROVIDER_URL) {
+    if (!process.env.MAINNET_RPC_URL) {
       res.status(500).json({
-        message: 'Missing `$MAINNET_PROVIDER_URL`. Configure server.',
+        message: 'Missing `$MAINNET_RPC_URL`. Configure server.',
       })
       return
     }
@@ -38,7 +38,7 @@ const handler = async (
     const mainnetProvider = new JSONRPCProvider(
       {
         allowGzip: true,
-        url: process.env.MAINNET_PROVIDER_URL,
+        url: process.env.MAINNET_RPC_URL,
         headers: {
           Accept: '*/*',
           'Accept-Encoding': 'gzip, deflate, br',

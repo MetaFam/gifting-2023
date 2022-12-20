@@ -4,11 +4,6 @@ import { withIronSessionApiRoute } from 'iron-session/next'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { IronSession } from 'iron-session'
 
-type NamedAddress = {
-  address: string
-  ens?: string
-}
-
 const handler = async (
   req: NextApiRequest,
   res: NextApiResponse<MeResponse | APIError>
@@ -17,7 +12,6 @@ const handler = async (
 
   if (!reqSesh.siwe) {
     res.status(401).json({ message: 'You have to login.' })
-
     return
   }
   res.status(200).json({

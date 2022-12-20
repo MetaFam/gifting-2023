@@ -8,7 +8,10 @@ export const LoginButton = ({ ...props }) => {
   return connected ? (
     <button
       title="Disconnect"
-      onClick={disconnect}
+      onClick={(evt) => {
+        evt.preventDefault()
+        disconnect()
+      }}
       style={{
         border: '2px solid #00000088',
         height: 'auto'
