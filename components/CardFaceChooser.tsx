@@ -67,14 +67,15 @@ export const CardFaceChooser: React.FC = () => {
 
   const changed = (
     { target: { selectedOptions: opts } }:
-    { target: { selectedOptions: NodeList } }
+    { target: { selectedOptions: HTMLCollection } }
   ) => {
-    console.info({ opts })
-    const [{ dataset }] = Array.from(opts)
+    const [{ dataset }] = Array.from<HTMLOptionElement>(
+      opts as Iterable<HTMLOptionElement>
+    )
 
     const { id, title = null, url } = dataset
-    if (!url) throw new Error('Missing URL.')
     console.info({ id, title, url, dataset })
+    if (!url) throw new Error('Missing URL.')
     setSelected({ id, title, url })
   }
 

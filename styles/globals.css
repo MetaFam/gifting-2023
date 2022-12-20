@@ -49,12 +49,8 @@ h1 {
 }
 
 @keyframes hue-spin {
-  0% {
-    filter: hue-rotate(0deg);
-  }
-  50% {
-    filter: hue-rotate(360deg);
-  }
+  0% { filter: hue-rotate(0deg) }
+  50% { filter: hue-rotate(360deg) }
 }
 
 h1 > span {
@@ -286,4 +282,22 @@ h2:hover .tooltip .tip {
 #submit:active {
   filter: hue-rotate(270deg) drop-shadow(0 0 0.1em darkgreen);
   transition: filter 0.1s ease-in-out;
+}
+
+#account {
+  margin-top: -1.5em;
+  textAlign: center;
+  font-size: calc(0.3 * var(--header-size));
+  -webkit-text-stroke: 3px #FFFFFF99;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg) }
+  100% { transform: rotate(360deg) }
+}
+
+.spinner {
+  display: inline-block;
+  font-size: calc(0.3 * var(--header-size));
+  animation: spin 1s linear infinite;
 }

@@ -15,6 +15,7 @@ export const useSIWE = () => {
   const [name, setName] = useState<Maybe<string>>(null)
   const [status, setStatus] = useState<Maybe<string>>(null)
   const [connected, setConnected] = useState(false)
+  const [connecting, setConnecting] = useState(false)
   const { host = null, origin = null } =
     typeof window !== 'undefined' ? window.location : {}
   const [provider] = useState(
@@ -54,6 +55,9 @@ export const useSIWE = () => {
 
   const connect = async () => {
     if (!provider) throw new Error('No provider.')
+    if(connecting) throw new Error('Double connect.')
+
+    setConnecting(true)
 
     try {
       await provider.send('eth_requestAccounts', [])
@@ -104,10 +108,9 @@ export const useSIWE = () => {
       setName(name ?? null)
       setAddress(address)
     } finally {
+      setConnecting(false)
       setStatus(null)
     }
-
-    console.info({ name, address })
   }
 
   const disconnect = async () => {
@@ -124,6 +127,7 @@ export const useSIWE = () => {
   }
 
   return {
+    connecting,
     connected,
     connect,
     disconnect,
