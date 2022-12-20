@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
-import styles from '../styles/Home.module.css'
+import { CardFaceChooser } from '../components/CardFaceChooser'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -14,109 +14,157 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-        <div className={styles.description}>
-          <p>
-            Get started by editing&nbsp;
-            <code className={styles.code}>pages/index.tsx</code>
-          </p>
-          <div>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{' '}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className={styles.vercelLogo}
-                width={100}
-                height={24}
-                priority
-              />
-            </a>
-          </div>
-        </div>
+      <header>
+        <h1>
+          <span className="org">
+            <span className="cap-letter">M</span>eta
+            <span className="cap-letter">G</span>ame's
+          </span>
+          <span className="year">2023</span>
+          <span className="event">
+            <span className="cap-letter">G</span>ifting
+          </span>
+        </h1>
+        <h1 className="outline">
+          <span className="org">
+            <span className="cap-letter">M</span>eta
+            <span className="cap-letter">G</span>ame's
+          </span>
+          <span className="year">2023</span>
+          <span className="event">
+            <span className="cap-letter">G</span>ifting
+          </span>
+        </h1>
+      </header>
+      <main>
+        <form>
+          <ol id="steps">
+            <li>
+              <h2>
+                Sign-In With Ethereum
+                <span className="tooltip">
+                  <input type="checkbox" id="siwe-tip" />
+                  <span className="handle">
+                    <label htmlFor="siwe-tip">🛈</label>
+                  </span>
+                  <span className="tip">
+                    <p>
+                      <strong>Sign-In With Ethereum</strong> will authenticate
+                      you to the site using your Ethereum wallet. In order to
+                      participate, the account you connect as must be a player
+                      or a patron of{' '}
+                      <a href="//metagame.wtf" target="_blank">
+                        MetaGame
+                      </a>
+                      .
+                    </p>
+                  </span>
+                </span>
+              </h2>
 
-        <div className={styles.center}>
-          <Image
-            className={styles.logo}
-            src="/next.svg"
-            alt="Next.js Logo"
-            width={180}
-            height={37}
-            priority
-          />
-          <div className={styles.thirteen}>
-            <Image
-              src="/thirteen.svg"
-              alt="13"
-              width={40}
-              height={31}
-              priority
-            />
-          </div>
-        </div>
+              <button>
+                <img id="SIWE" src="siwe.svg" alt="Sign-In With Ethereum" />
+              </button>
+            </li>
+            <li>
+              <h2>
+                Select A Card Front
+                <span className="tooltip">
+                  <input type="checkbox" id="front-tip" />
+                  <span className="handle">
+                    <label htmlFor="front-tip">🛈</label>
+                  </span>
+                  <span className="tip">
+                    <p>
+                      The card front should be an image with a aspect ratio of
+                      85.6:54 <i>(the dimensions of a CR-80 card)</i>.
+                    </p>
+                    <p>
+                      Images are ideally in SVG format so they can be easily
+                      edited for use by other players.
+                    </p>
+                  </span>
+                </span>
+              </h2>
 
-        <div className={styles.grid}>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Docs <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Find in-depth information about Next.js features and&nbsp;API.
-            </p>
-          </a>
+              <CardFaceChooser />
+            </li>
+            <li>
+              <h2>
+                Select A Card Back
+                <span className="tooltip">
+                  <input type="checkbox" id="back-tip" />
+                  <span className="handle">
+                    <label htmlFor="back-tip">🛈</label>
+                  </span>
+                  <span className="tip">
+                    <p>
+                      The card front should be an image with a aspect ratio of
+                      85.6:54 <i>(the dimensions of a CR-80 card)</i>.
+                    </p>
+                    <p>
+                      Images are ideally in SVG format so they can be easily
+                      edited for use by other players.
+                    </p>
+                  </span>
+                </span>
+              </h2>
 
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Learn <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Learn about Next.js in an interactive course with&nbsp;quizzes!
-            </p>
-          </a>
+              <fieldset className="file">
+                <label>
+                  <h3>Existing:</h3>
+                  <select id="back">
+                    <option>No Selection</option>
+                    <option>Back #1</option>
+                    <option>Back #2</option>
+                    <option>Back #3</option>
+                  </select>
+                </label>
+                <span>or</span>
+                <label>
+                  <h3 className="button">Upload</h3>
+                  <input type="file" id="front" accept="image/*" />
+                </label>
+              </fieldset>
+            </li>
+            <li>
+              <h2>
+                Specify a Mailing Address
+                <span className="tooltip">
+                  <input type="checkbox" id="mail-tip" />
+                  <span className="handle">
+                    <label htmlFor="mail-tip">🛈</label>
+                  </span>
+                  <span className="tip">
+                    <p>
+                      Participants have two options for specifying an address:
+                    </p>
+                    <ul>
+                      <li>
+                        Mail can be sent to a Post Office with a recipient name,
+                        but no specific delivery address. In this situation the
+                        player will need to give their legal name so as to be
+                        able to show identification to claim the package.
+                      </li>
+                      <li>
+                        Mail can be addressed as normal with a number and
+                        street. In this situation, a participant may use a
+                        pseudonym.
+                      </li>
+                    </ul>
+                  </span>
+                </span>
+              </h2>
 
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Templates <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Discover and deploy boilerplate example Next.js&nbsp;projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Deploy <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Instantly deploy your Next.js site to a shareable URL
-              with&nbsp;Vercel.
-            </p>
-          </a>
-        </div>
+              <textarea id="address"></textarea>
+            </li>
+            <li>
+              <button id="submit" type="submit">
+                Submit
+              </button>
+            </li>
+          </ol>
+        </form>
       </main>
     </>
   )
