@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import { CardFaceChooser } from '../components/CardFaceChooser'
+import { LoginButton } from '../components/LoginButton'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -62,9 +63,7 @@ export default function Home() {
                 </span>
               </h2>
 
-              <button>
-                <img id="SIWE" src="siwe.svg" alt="Sign-In With Ethereum" />
-              </button>
+              <LoginButton />
             </li>
             <li>
               <h2>

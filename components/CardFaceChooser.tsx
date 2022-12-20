@@ -57,12 +57,12 @@ export const CardFaceChooser: React.FC = () => {
         <h3>Existing:</h3>
         <select id="front">
           <option>No Selection</option>
-          {users.map((user: User) => {
+          {users.map((user: User, idx: number) => {
             if (user.faces.length > 0) {
               return (
-                <optgroup key={user.id} label={`By @${user.name}`}>
+                <optgroup key={idx} label={`By @${user.name}`}>
                   {user.faces.map((face) => (
-                    <option data-url={face.url} data-id={face.id}>
+                    <option key={face.id} data-url={face.url} data-id={face.id}>
                       {face.title}
                     </option>
                   ))}
