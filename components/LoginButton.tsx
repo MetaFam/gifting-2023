@@ -11,19 +11,13 @@ export const LoginButton = ({ ...props }) => {
       onClick={disconnect}
       style={{
         border: '2px solid #00000088',
-        height: 'auto',
+        height: 'auto'
       }}
-      {...props}>
-      <Image
-        src="/connected.svg"
-        alt="Disconnect"
-        style={{
-          height: '10vh',
-          width: '10vh',
-        }}
-      />
+      {...props}
+    >
+      <Image src="/connected.svg" alt="Disconnect" width="200" height="50" />
       {(name || address) && (
-        <h3 style={{ 'text-align': 'center' }}>
+        <h3 style={{ textAlign: 'center' }}>
           {name ?? `${address?.slice(0, 5)}…${address?.slice(-5)}`}
         </h3>
       )}
@@ -31,9 +25,13 @@ export const LoginButton = ({ ...props }) => {
   ) : (
     <button
       title="Sign-In With Ethereum"
-      onClick={connect}
+      onClick={(evt) => {
+        evt.preventDefault()
+        connect()
+      }}
       style={{ border: '2px solid #00000088' }}
-      {...props}>
+      {...props}
+    >
       <Image
         src="/siwe.svg"
         alt="Sign-In With Ethereum"

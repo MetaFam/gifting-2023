@@ -1,10 +1,10 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import { CardFaceChooser } from '../components/CardFaceChooser'
-import { LoginButton } from '../components/LoginButton'
+import Head from "next/head";
+import Image from "next/image";
+import { Inter } from "@next/font/google";
+import { CardFaceChooser } from "../components/CardFaceChooser";
+import { LoginButton } from "../components/LoginButton";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   return (
@@ -53,7 +53,7 @@ export default function Home() {
                       <strong>Sign-In With Ethereum</strong> will authenticate
                       you to the site using your Ethereum wallet. In order to
                       participate, the account you connect as must be a player
-                      or a patron of{' '}
+                      or a patron of{" "}
                       <a href="//metagame.wtf" target="_blank">
                         MetaGame
                       </a>
@@ -109,22 +109,7 @@ export default function Home() {
                 </span>
               </h2>
 
-              <fieldset className="file">
-                <label>
-                  <h3>Existing:</h3>
-                  <select id="back">
-                    <option>No Selection</option>
-                    <option>Back #1</option>
-                    <option>Back #2</option>
-                    <option>Back #3</option>
-                  </select>
-                </label>
-                <span>or</span>
-                <label>
-                  <h3 className="button">Upload</h3>
-                  <input type="file" id="front" accept="image/*" />
-                </label>
-              </fieldset>
+              <CardFaceChooser />
             </li>
             <li>
               <h2>
@@ -166,5 +151,5 @@ export default function Home() {
         </form>
       </main>
     </>
-  )
+  );
 }

@@ -1,125 +1,132 @@
-import { ethers } from 'ethers'
-import { useEffect, useState } from 'react'
-import { SiweMessage as SIWEMessage } from 'siwe'
-import login from './pages/api/login'
-import { Maybe, MeResponse } from './types'
+import { ethers } from "ethers";
+import { useEffect, useState } from "react";
+import { SiweMessage as SIWEMessage } from "siwe";
+import login from "./pages/api/login";
+import { Maybe, MeResponse } from "./types";
 
-declare type ExternalProvider = import('@ethersproject/providers').ExternalProvider
+declare type ExternalProvider = import("@ethersproject/providers").ExternalProvider;
 declare global {
   interface Window {
-    ethereum: ExternalProvider
+    ethereum: ExternalProvider;
   }
 }
 
 export const useSIWE = () => {
-  const [address, setAddress] = useState<Maybe<string>>(null)
-  const [name, setName] = useState<Maybe<string>>(null)
-  const [status, setStatus] = useState<Maybe<string>>(null)
-  const [connected, setConnected] = useState(false)
+  const [address, setAddress] = useState<Maybe<string>>(null);
+  const [name, setName] = useState<Maybe<string>>(null);
+  const [status, setStatus] = useState<Maybe<string>>(null);
+  const [connected, setConnected] = useState(false);
   const { host = null, origin = null } =
-    typeof window !== 'undefined' ? window.location : {}
+    typeof window !== "undefined" ? window.location : {};
   const [provider] = useState(
-    typeof window !== 'undefined'
+    typeof window !== "undefined"
       ? new ethers.providers.Web3Provider(window.ethereum)
       : null
-  )
+  );
 
   useEffect(() => {
     const check = async () => {
-      const meRes = await fetch('/api/me', {
-        method: 'POST',
-        credentials: 'same-origin',
-      })
+      try {
+        const regex = `(; |^)?\s*${process.env.NEXT_PUBLIC_SESSION_COOKIE_NAME}`;
+        if (new RegExp(regex).test(document.cookie)) {
+          const meRes = await fetch("/api/me", {
+            method: "POST",
+            credentials: "same-origin"
+          });
 
-      if (meRes.ok) {
-        const me = await meRes.json()
-        console.info({ me })
-        const { ens: name, address } = me
-        setName(name)
-        setAddress(address)
-        setConnected(true)
+          if (meRes.ok) {
+            const me = await meRes.json();
+            console.info({ me });
+            const { ens: name, address } = me;
+            setName(name);
+            setAddress(address);
+            setConnected(true);
+          }
+        }
+      } catch (error) {
+        console.error({ error });
       }
-    }
+    };
 
-    check()
-  }, [])
+    check();
+  }, []);
 
   const connect = async () => {
-    if (!provider) return
+    if (!provider) throw new Error("No provider.");
 
     try {
-      await provider.send('eth_requestAccounts', [])
-      const signer = provider.getSigner()
-      const address = await signer.getAddress()
+      await provider.send("eth_requestAccounts", []);
+      const signer = provider.getSigner();
+      const address = await signer.getAddress();
 
-      const statement = 'Login to Mimis'
+      const statement = "Login to Mimis";
 
-      setStatus('Getting nonce…')
+      setStatus("Getting nonce…");
 
       const nonceRes = await fetch(`/api/nonce`, {
-        credentials: 'same-origin',
-      })
-      const nonce = await nonceRes.text()
+        credentials: "same-origin"
+      });
+      const nonce = await nonceRes.text();
 
-      setStatus('Building message…')
+      setStatus("Building message…");
 
       const messageBase = new SIWEMessage({
-        domain: host ?? 'default',
+        domain: host ?? "default",
         address,
         statement,
-        uri: origin ?? 'example://default',
-        version: '1',
+        uri: origin ?? "example://default",
+        version: "1",
         chainId: 1,
-        nonce,
-      })
-      const message = messageBase.prepareMessage()
+        nonce
+      });
+      const message = messageBase.prepareMessage();
 
-      setStatus('Signing message…')
+      setStatus("Signing message…");
 
-      const signature = await signer.signMessage(message)
+      const signature = await signer.signMessage(message);
 
-      setStatus('Logging in…')
+      setStatus("Logging in…");
 
-      const loginRes = await fetch('/api/login', {
-        method: 'POST',
+      const loginRes = await fetch("/api/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({ message, signature }),
-        credentials: 'same-origin',
-      })
-      const auth = await loginRes.json()
-      console.info({ auth })
-      const { ens: name } = auth as MeResponse
+        credentials: "same-origin"
+      });
+      const auth = await loginRes.json();
+      console.info({ auth });
+      const { ens: name } = auth as MeResponse;
 
-      setConnected(true)
-      setName(name ?? null)
-      setAddress(address)
+      setConnected(true);
+      setName(name ?? null);
+      setAddress(address);
     } finally {
-      setStatus(null)
+      setStatus(null);
     }
 
-    console.info({ name, address })
-  }
+    console.info({ name, address });
+  };
 
   const disconnect = async () => {
-    const logoutRes = await fetch('/api/logout', {
-      method: 'POST',
-      credentials: 'same-origin',
-    })
+    const logoutRes = await fetch("/api/logout", {
+      method: "POST",
+      credentials: "same-origin"
+    });
 
     if (logoutRes.ok) {
-      setConnected(false)
-      setName(null)
-      setAddress(null)
+      setConnected(false);
+      setName(null);
+      setAddress(null);
     }
-  }
+  };
 
   return {
     connected,
     connect,
     disconnect,
     address,
-    name,
-  }
-}
+    name
+  };
+};
