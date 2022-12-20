@@ -15,11 +15,10 @@ const handler = async (
     if (!process.env.SESSION_PASSWORD) {
       throw new Error('`$SESSION_PASSWORD` not configured.')
     }
-    if (!reqSesh.nonce) {
+    if (!reqSesh.nonce || Math.random() <= 0.25) {
       reqSesh.nonce = generateNonce()
       await reqSesh.save()
     }
-    console.info({ non: reqSesh.nonce })
     res.status(200).send(reqSesh.nonce)
   } catch (err) {
     res.status(500).send({ message: (err as Error).message })

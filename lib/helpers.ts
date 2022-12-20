@@ -1,6 +1,7 @@
 import { CID } from 'multiformats/cid'
 import { ipfsLinkPattern } from '@/config'
 import { Maybe } from '@/types'
+import { EventHandler, SyntheticEvent } from 'react'
 
 export const httpURL = (
   uri: Maybe<string>,
@@ -24,3 +25,15 @@ export const httpURL = (
 
   return uri
 }
+
+
+// The goal is to be able to write:
+//   onClick={noDefault(disconnect)}
+export const noDefault = (
+  <Evt extends SyntheticEvent>(func: EventHandler<Evt>) => (
+    (evt: Evt) => {
+      evt.preventDefault()
+      func.call(null, evt)
+    }
+  )
+)

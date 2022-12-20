@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSIWE } from '@/hooks'
 import Image from 'next/image'
-import { relative } from 'path'
+import { noDefault } from '@/helpers'
 
 export const LoginButton = ({ ...props }) => {
   const {
@@ -10,18 +10,13 @@ export const LoginButton = ({ ...props }) => {
 
   return connected ? (
     <button
+      id="connection"
       title="Disconnect"
-      onClick={(evt) => {
-        evt.preventDefault()
-        disconnect()
-      }}
-      style={{
-        border: '2px solid #00000088',
-        height: 'auto'
-      }}
+      onClick={noDefault(disconnect)}
       {...props}
     >
-      <Image src="/connected.svg" alt="Disconnect" width="200" height="50" />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="/connected.svg" alt="Disconnect" />
       {(name || address) && (
         <h3 id="account">
           {name ?? `${address?.slice(0, 5)}…${address?.slice(-5)}`}
@@ -30,24 +25,17 @@ export const LoginButton = ({ ...props }) => {
     </button>
   ) : (
     <button
+      id="connection"
       title="Sign-In With Ethereum"
-      onClick={(evt) => {
-        evt.preventDefault()
-        connect()
-      }}
+      onClick={noDefault(connect)}
       disabled={connecting}
-      style={{ border: '2px solid #00000088' }}
       {...props}
     >
       {connecting ? (
         <span className="spinner">⟳</span>
       ) : (
-        <Image
-          src="/siwe.svg"
-          alt="Sign-In With Ethereum"
-          width="200"
-          height="50"
-        />
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src="/siwe.svg" alt="Sign-In With Ethereum"/>
       )}
     </button>
   )
