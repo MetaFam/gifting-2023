@@ -97,9 +97,23 @@ export const CardFaceChooser: React.FC = () => {
 
   return (
     <>
-      <fieldset className={style.file}>
-        <label>
-          <h3>Existing:</h3>
+      <fieldset
+        className={[
+          style.file,
+          style[`${uploading ? 'in' : ''}active`],
+        ].join(' ')}
+      >
+        <label onClick={() => setUploading(false)}>
+          <h3
+            ref={(ref) => {
+              ref?.style.setProperty(
+                '--grid-number',
+                Math.round(Math.random() * 1000),
+              )
+            }}
+          >
+            Existing:
+          </h3>
           <select
             id="front"
             onChange={changed}

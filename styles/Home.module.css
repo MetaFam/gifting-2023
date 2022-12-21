@@ -4,7 +4,7 @@
 }
 
 @font-face {
-  font-family: 'Boho - Lined';
+  font-family: 'Boho: Lined';
   src: url('../public/Boho - Lined.ttf') format('truetype');
 }
 
@@ -53,7 +53,7 @@
 
   & .year {
     font-size: calc(1.7 * var(--header-size));
-    font-family: 'Boho - Lined', sans-serif;
+    font-family: 'Boho: Lined', sans-serif;
     filter: hue-rotate(90deg);
     margin-top: calc(-0.95 * var(--header-size));
   }
