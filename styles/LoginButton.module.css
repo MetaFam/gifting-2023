@@ -1,0 +1,28 @@
+#account {
+  margin-top: -20%;
+  margin-bottom: 7%;
+  textAlign: center;
+  font-size: calc(0.3 * var(--header-size));
+  -webkit-text-stroke: 1px #FFFFFFBB;
+  filter: drop-shadow(0 0 0.01em lime);
+}
+
+#connection {
+  border: 2px solid #00000088;
+
+  & img {
+    height: 8em;
+    width: 24em;
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg) }
+  100% { transform: rotate(360deg) }
+}
+
+.spinner {
+  display: inline-block;
+  font-size: calc(0.5 * var(--header-size));
+  animation: spin 1s linear infinite;
+}

@@ -1,0 +1,50 @@
+.file {
+  background-color: #FFFFFF99;
+
+  @media (prefers-color-scheme: dark) {
+    & {
+      background-color: #33333399;
+    }
+  }
+
+  & * {
+    font-size: calc(0.125 * var(--header-size));
+  }
+
+  &, & * {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+  }
+
+  @media only screen and (max-width: 768px) {
+    & {
+      flex-direction: column;
+    }
+    & label {
+      align-self: center;
+    }
+  }
+
+  & label {
+    display: flex;
+  }
+
+  & h3 {
+    margin: 0;
+    margin-right: 0.5ex;
+  }
+
+  & > span {
+    margin-inline: 0.5ex;
+    align-self: center;
+  }
+
+  & input {
+    display: none;
+  }
+}
+
+.card {
+  aspect-ratio: calc(856 / 540);
+}

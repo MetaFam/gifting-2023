@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSIWE } from '@/hooks'
 import { noDefault } from '@/helpers'
-import style from '../styles/Home.module.css'
+import style from '../styles/LoginButton.module.css'
 
 export const LoginButton = ({ ...props }) => {
   const {

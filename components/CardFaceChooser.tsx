@@ -5,11 +5,11 @@ import {
   ApolloProvider,
   gql
 } from '@apollo/client'
-import Image from 'next/image'
 import { graphQLURL, hasuraAdminKey } from '@/config'
-import { httpURL } from '@/helpers'
+import { httpURL, noDefault } from '@/helpers'
 import { Maybe } from '@/types'
-import style from '../styles/Home.module.css'
+import style from '../styles/CardFaceChooser.module.css'
+import homeStyle from '../styles/Home.module.css'
 
 const headers: Record<string, string> = {}
 if(hasuraAdminKey) {
@@ -54,9 +54,27 @@ type Selected = {
   url?: string
 }
 
+export const FaceGroup = (
+  { user }: { user: User }
+) => (
+  <optgroup key={user.name} label={`By @${user.name}`}>
+    {user.faces.map((face) => (
+      <option
+        key={face.id}
+        data-url={face.url}
+        data-id={face.id}
+        data-title={face.title}
+      >
+        {face.title}
+      </option>
+    ))}
+  </optgroup>
+)
+
 export const CardFaceChooser: React.FC = () => {
   const [users, setUsers] = useState([])
   const [selected, setSelected] = useState<Selected>({})
+  const [uploading, setUploading] = useState(false)
 
   useEffect(() => {
     const q = async () => {
@@ -67,16 +85,13 @@ export const CardFaceChooser: React.FC = () => {
   }, [])
 
   const changed = (
-    { target: { selectedOptions: opts } }:
-    { target: { selectedOptions: HTMLCollection } }
+    { target }: { target: HTMLSelectElement }
   ) => {
-    const [{ dataset }] = Array.from<HTMLOptionElement>(
-      opts as Iterable<HTMLOptionElement>
-    )
-
+    const {
+      value, selectedOptions: [{ dataset }],
+    } = target
     const { id, title = null, url } = dataset
     console.info({ id, title, url, dataset })
-    if (!url) throw new Error('Missing URL.')
     setSelected({ id, title, url })
   }
 
@@ -85,31 +100,34 @@ export const CardFaceChooser: React.FC = () => {
       <fieldset className={style.file}>
         <label>
           <h3>Existing:</h3>
-          <select id="front" onChange={changed}>
+          <select
+            id="front"
+            onChange={changed}
+            disabled={uploading}
+          >
             <option>No Selection</option>
-            {users.map((user: User, idx: number) => {
-              if (user.faces.length > 0) {
-                return (
-                  <optgroup key={idx} label={`By @${user.name}`}>
-                    {user.faces.map((face) => (
-                      <option
-                        key={face.id}
-                        data-url={face.url}
-                        data-id={face.id}
-                      >
-                        {face.title}
-                      </option>
-                    ))}
-                  </optgroup>
-                )
-              }
-              return null
-            })}
+            {users.map((user: User) => (
+              user.faces.length > 0 ? (
+                <FaceGroup key={user.name} {...{ user }}/>
+              ) : (
+                null
+              )
+            ))}
           </select>
         </label>
         <span>or</span>
         <label>
-          <button className={style.button}>Upload</button>
+          <button
+            className={
+              [
+                homeStyle.button,
+                homeStyle[`${uploading ? '' : 'in'}active`],
+              ].join(' ')
+            }
+            onClick={noDefault(() => setUploading((up) => !up))}
+          >
+            Upload
+          </button>
           <input type="file" id="front" accept="image/*" />
         </label>
       </fieldset>
