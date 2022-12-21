@@ -58,6 +58,7 @@ export const Home = () => (
             <h2>Select A Card Back</h2>
             <section className={style.explanation}>
               <p>The back is the same as the front, just in back.</p>
+              <p>Gold and silver foil accents are available. If you would like some on your card, create a multipage SVG using <a href="//inkscape.org">Inkscape</a> where the first page is the composite of your entire image, and there are three other pages with the color, silver, and gold masks.</p>
             </section>
 
             <CardFaceChooser />

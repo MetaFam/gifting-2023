@@ -7,6 +7,14 @@
     }
   }
 
+  &.active label:first-of-type {
+    background-color: #429A0088;
+  }
+
+  &.inactive label:first-of-type {
+    text-decoration: line-through;
+  }
+
   & * {
     font-size: calc(0.125 * var(--header-size));
   }
@@ -21,6 +29,7 @@
     & {
       flex-direction: column;
     }
+
     & label {
       align-self: center;
     }

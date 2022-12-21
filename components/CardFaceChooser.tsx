@@ -104,16 +104,7 @@ export const CardFaceChooser: React.FC = () => {
         ].join(' ')}
       >
         <label onClick={() => setUploading(false)}>
-          <h3
-            ref={(ref) => {
-              ref?.style.setProperty(
-                '--grid-number',
-                Math.round(Math.random() * 1000),
-              )
-            }}
-          >
-            Existing:
-          </h3>
+          <h3>Existing:</h3>
           <select
             id="front"
             onChange={changed}
