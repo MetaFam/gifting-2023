@@ -138,10 +138,6 @@
     ;
     border: 1px inset;
   }
-
-  &.active {
-    background-color: #259D1077;
-  }
 }
 
 .explanation {

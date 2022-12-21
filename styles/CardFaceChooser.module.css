@@ -7,11 +7,11 @@
     }
   }
 
-  &.active label:first-of-type {
-    background-color: #429A0088;
+  &.active label:first-of-type *, &.inactive label:last-of-type * {
+    background-color: #429A0044;
   }
 
-  &.inactive label:first-of-type {
+  &.inactive label:first-of-type, &.active label:last-of-type {
     text-decoration: line-through;
   }
 
