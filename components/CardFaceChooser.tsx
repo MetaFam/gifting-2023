@@ -9,6 +9,7 @@ import Image from 'next/image'
 import { graphQLURL, hasuraAdminKey } from '@/config'
 import { httpURL } from '@/helpers'
 import { Maybe } from '@/types'
+import style from '../styles/Home.module.css'
 
 const headers: Record<string, string> = {}
 if(hasuraAdminKey) {
@@ -81,7 +82,7 @@ export const CardFaceChooser: React.FC = () => {
 
   return (
     <>
-      <fieldset className="file">
+      <fieldset className={style.file}>
         <label>
           <h3>Existing:</h3>
           <select id="front" onChange={changed}>
@@ -108,15 +109,15 @@ export const CardFaceChooser: React.FC = () => {
         </label>
         <span>or</span>
         <label>
-          <h3 className="button">Upload</h3>
+          <button className={style.button}>Upload</button>
           <input type="file" id="front" accept="image/*" />
         </label>
       </fieldset>
       {selected.url != null && (
-        <Image
+        <img
           src={httpURL(selected.url) ?? ''}
           alt={selected.title ?? '𝙐𝙣𝙩𝙞𝙩𝙡𝙚𝙙'}
-          width="856" height="540"
+          className={style.card}
         />
       )}
     </>
