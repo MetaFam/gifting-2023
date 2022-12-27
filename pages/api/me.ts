@@ -10,13 +10,26 @@ const handler = async (
 ) => {
   const reqSesh = req.session as IronSession & MeResponse
 
-  if (!reqSesh.siwe) {
+  if(!reqSesh.siwe) {
     res.status(401).json({ message: 'You have to login.' })
     return
   }
+  
+  if(reqSesh.expirationTime) {
+    const exp = new Date(reqSesh.expirationTime)
+
+    if(new Date() > exp) {
+      res.status(401).json({
+        message: `Your session expired ${exp.toISOString()}.`
+      })
+      return
+    }
+  }
+
   res.status(200).json({
     address: reqSesh.siwe.address,
     ens: reqSesh.ens ?? undefined,
+    username: reqSesh.username ?? undefined,
     avatar: reqSesh.avatar,
   })
 }

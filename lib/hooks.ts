@@ -1,9 +1,10 @@
 import { ethers } from 'ethers'
 import { useEffect, useState } from 'react'
 import { SiweMessage as SIWEMessage } from 'siwe'
-import { Maybe, MeResponse } from './types'
+import type { ExternalProvider } from '@ethersproject/providers'
+import { loginMessage } from '@/config'
+import { Maybe, MeResponse } from '@/types'
 
-declare type ExternalProvider = import('@ethersproject/providers').ExternalProvider
 declare global {
   interface Window {
     ethereum: ExternalProvider
@@ -12,12 +13,14 @@ declare global {
 
 export const useSIWE = () => {
   const [address, setAddress] = useState<Maybe<string>>(null)
-  const [name, setName] = useState<Maybe<string>>(null)
+  const [ens, setENS] = useState<Maybe<string>>(null)
+  const [username, setUsername] = useState<Maybe<string>>(null)
   const [status, setStatus] = useState<Maybe<string>>(null)
   const [connected, setConnected] = useState(false)
   const [connecting, setConnecting] = useState(false)
-  const { host = null, origin = null } =
+  const { host = null, origin = null } = (
     typeof window !== 'undefined' ? window.location : {}
+  )
   const [provider] = useState(
     // prettier-ignore
     typeof window !== 'undefined'
@@ -28,24 +31,20 @@ export const useSIWE = () => {
   useEffect(() => {
     const check = async () => {
       try {
-        const { NEXT_PUBLIC_SESSION_COOKIE_NAME: cookieName } = process.env
-        const regex = `(;|^)\s*${cookieName}`
-        if (new RegExp(regex).test(document.cookie)) {
-          const meRes = await fetch('/api/me', {
-            method: 'POST',
-            credentials: 'same-origin',
-          })
+        const meRes = await fetch('/api/me', {
+          method: 'POST',
+          credentials: 'same-origin',
+        })
 
-          if (meRes.ok) {
-            const me = await meRes.json()
-            console.info({ me })
-            const { ens: name, address } = me
-            setName(name)
-            setAddress(address)
-            setConnected(true)
-          }
+        if(meRes.ok) {
+          const me = await meRes.json()
+          const { ens, address, username } = me
+          setENS(ens)
+          setUsername(username)
+          setAddress(address)
+          setConnected(true)
         }
-      } catch (error) {
+      } catch(error) {
         console.error({ error })
       }
     }
@@ -54,7 +53,8 @@ export const useSIWE = () => {
   }, [])
 
   const connect = async () => {
-    if (!provider) throw new Error('No provider.')
+    if(!provider) throw new Error('No provider.')
+    if(connected) throw new Error('Already connected.')
     if(connecting) throw new Error('Double connect.')
 
     setConnecting(true)
@@ -63,8 +63,6 @@ export const useSIWE = () => {
       await provider.send('eth_requestAccounts', [])
       const signer = provider.getSigner()
       const address = await signer.getAddress()
-
-      const statement = 'Login to Mimis'
 
       setStatus('Getting nonce…')
 
@@ -78,7 +76,7 @@ export const useSIWE = () => {
       const messageBase = new SIWEMessage({
         domain: host ?? 'default',
         address,
-        statement,
+        statement: loginMessage,
         uri: origin ?? 'example://default',
         version: '1',
         chainId: 1,
@@ -94,19 +92,19 @@ export const useSIWE = () => {
 
       const loginRes = await fetch('/api/login', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message, signature }),
         credentials: 'same-origin',
       })
       const auth = await loginRes.json()
-      console.info({ auth })
-      const { ens: name } = auth as MeResponse
+      const { ens, username } = auth as MeResponse
 
       setConnected(true)
-      setName(name ?? null)
+      setENS(ens ?? null)
+      setUsername(username ?? null)
       setAddress(address)
+    } catch(error) {
+      console.error({ error })
     } finally {
       setConnecting(false)
       setStatus(null)
@@ -121,7 +119,8 @@ export const useSIWE = () => {
 
     if (logoutRes.ok) {
       setConnected(false)
-      setName(null)
+      setENS(null)
+      setUsername(null)
       setAddress(null)
     }
   }
@@ -132,6 +131,8 @@ export const useSIWE = () => {
     connect,
     disconnect,
     address,
-    name,
+    ens,
+    username,
+    status,
   }
 }

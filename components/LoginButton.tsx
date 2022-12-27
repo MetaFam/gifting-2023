@@ -5,7 +5,7 @@ import style from '../styles/LoginButton.module.css'
 
 export const LoginButton = ({ ...props }) => {
   const {
-    connecting, connected, connect, disconnect, name, address,
+    connecting, connected, connect, disconnect, address, ens, status,
   } = useSIWE()
 
   return connected ? (
@@ -18,11 +18,12 @@ export const LoginButton = ({ ...props }) => {
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src="/connected.svg" alt="Disconnect" />
-      {(name || address) && (
+      {(ens || address) && (
         <h3 id={style.account}>
-          {name ?? `${address?.slice(0, 5)}…${address?.slice(-5)}`}
+          {ens ?? `${address?.slice(0, 5)}…${address?.slice(-5)}`}
         </h3>
       )}
+      {status}
     </button>
   ) : (
     <button
@@ -39,6 +40,7 @@ export const LoginButton = ({ ...props }) => {
         // eslint-disable-next-line @next/next/no-img-element
         <img src="/siwe.svg" alt="Sign-In With Ethereum"/>
       )}
+      {status}
     </button>
   )
 }

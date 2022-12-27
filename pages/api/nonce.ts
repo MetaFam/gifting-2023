@@ -12,15 +12,15 @@ const handler = async (
   try {
     const reqSesh = req.session as IronSession & NonceResponse
 
-    if (!process.env.SESSION_PASSWORD) {
+    if(!process.env.SESSION_PASSWORD) {
       throw new Error('`$SESSION_PASSWORD` not configured.')
     }
-    if (!reqSesh.nonce || Math.random() <= 0.25) {
+    if(!reqSesh.nonce) {
       reqSesh.nonce = generateNonce()
       await reqSesh.save()
     }
     res.status(200).send(reqSesh.nonce)
-  } catch (err) {
+  } catch(err) {
     res.status(500).send({ message: (err as Error).message })
   }
 }

@@ -19,6 +19,7 @@ export type MeResponse = {
   avatar?: Maybe<string>
   address: string
   siwe?: SIWEMessage
+  username?: Maybe<string>
   expirationTime?: number
 }
 

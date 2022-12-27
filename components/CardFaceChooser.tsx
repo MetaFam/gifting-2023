@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import {
   ApolloClient,
   InMemoryCache,
@@ -10,6 +10,7 @@ import { httpURL, noDefault } from '@/helpers'
 import { Maybe } from '@/types'
 import style from '../styles/CardFaceChooser.module.css'
 import homeStyle from '../styles/Home.module.css'
+import { FaceForm } from './FaceForm'
 
 const headers: Record<string, string> = {}
 if(hasuraAdminKey) {
@@ -85,14 +86,10 @@ export const CardFaceChooser: React.FC = () => {
   }, [])
 
   const changed = (
-    { target }: { target: HTMLSelectElement }
+    { target: { selectedOptions: [{ dataset }] } }:
+    ChangeEvent<HTMLSelectElement>
   ) => {
-    const {
-      value, selectedOptions: [{ dataset }],
-    } = target
-    const { id, title = null, url } = dataset
-    console.info({ id, title, url, dataset })
-    setSelected({ id, title, url })
+    setSelected({ ...dataset })
   }
 
   return (
@@ -136,12 +133,16 @@ export const CardFaceChooser: React.FC = () => {
           <input type="file" id="front" accept="image/*" />
         </label>
       </fieldset>
-      {selected.url != null && (
-        <img
-          src={httpURL(selected.url) ?? ''}
-          alt={selected.title ?? '𝙐𝙣𝙩𝙞𝙩𝙡𝙚𝙙'}
-          className={style.card}
-        />
+      {uploading ? (
+        <FaceForm/>
+      ) : (
+        selected.url != null && (
+          <img
+            src={httpURL(selected.url) ?? ''}
+            alt={selected.title ?? '𝙐𝙣𝙩𝙞𝙩𝙡𝙚𝙙'}
+            className={style.card}
+          />
+        )
       )}
     </>
   )

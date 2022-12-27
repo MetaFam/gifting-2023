@@ -1,3 +1,18 @@
+@font-face {
+  font-family: 'Best Friends';
+  src: url('../public/Best Friends.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Boho: Lined';
+  src: url('../public/Boho - Lined.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Boogie Down';
+  src: url('../public/Boogie Down.ttf') format('truetype');
+}
+
 :root {
   --header-size: min(18vw, 18vh);
 
@@ -20,4 +35,9 @@
       color-scheme: dark;
     }
   }
+}
+
+@keyframes hue-spin {
+  0% { filter: hue-rotate(0deg) }
+  50% { filter: hue-rotate(360deg) }
 }
